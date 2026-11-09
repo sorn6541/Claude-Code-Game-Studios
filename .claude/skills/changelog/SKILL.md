@@ -1,6 +1,6 @@
 ---
 name: changelog
-description: "Auto-generate a changelog from git commits and sprint data. Internal and player-facing versions."
+description: "Git 커밋 및 스프린트 데이터로부터 변경 로그(Changelog) 자동 생성. 내부용 및 플레이어 공개용 버전 제공."
 argument-hint: "[version|sprint-number]"
 user-invocable: true
 allowed-tools: Read, Glob, Grep, Write, Bash(bash "*/.claude/skills/changelog/../../hooks/yaml-helper.sh" resolve_config *), Bash(git log *), Bash(git tag --list*), Bash(git rev-parse *)

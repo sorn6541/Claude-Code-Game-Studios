@@ -1,6 +1,6 @@
 ---
 name: propagate-design-change
-description: "Finds architecture decisions (ADRs) made stale by a changed GDD and walks through resolving each. Use when the user changed a number or rule in a GDD and asks which ADRs or architecture decisions are now out of date."
+description: "GDD 변경으로 인해 오래되거나 무효화된 아키텍처 결정(ADR)을 찾아내고 해결 절차 안내."
 argument-hint: "[path/to/changed-gdd.md] [--review full|lean|solo]"
 user-invocable: true
 allowed-tools: Read, Glob, Grep, Write, Edit, Agent, AskUserQuestion, Bash(bash "*/.claude/skills/propagate-design-change/../../hooks/yaml-helper.sh" resolve_config *), Bash(git diff *), Bash(git log *), Bash(bash .claude/scripts/adr-status.sh*), Bash(bash .claude/scripts/md-section.sh *)

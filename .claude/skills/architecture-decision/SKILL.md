@@ -1,6 +1,6 @@
 ---
 name: architecture-decision
-description: "Create an ADR documenting a technical decision: context, alternatives considered, consequences."
+description: "기술적 의사결정을 문서화하는 ADR 작성: 배경 컨텍스트, 검토된 대안, 기대 효과 및 결과."
 argument-hint: "[title | retrofit <path> | accept <ADR-id>] [--review full|lean|solo]"
 user-invocable: true
 allowed-tools: Read, Glob, Grep, Write, Edit, Agent, AskUserQuestion, Bash(wc -c *), Bash(bash "*/.claude/skills/architecture-decision/../../hooks/yaml-helper.sh" resolve_config *), Bash(bash .claude/scripts/registry.sh *)

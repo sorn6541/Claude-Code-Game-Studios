@@ -1,6 +1,6 @@
 ---
 name: skill-improve
-description: "Improve a skill via a test-fix-retest loop — static checks, targeted fixes, keep or revert on score change."
+description: "테스트-수정-재테스트 루프를 통해 스킬 개선 — 정적 검사, 타깃 수정, 점수 변화에 따른 유지/롤백."
 argument-hint: "[skill-name]"
 user-invocable: true
 allowed-tools: Read, Glob, Grep, Write, Bash(bash "*/.claude/skills/skill-improve/../../hooks/yaml-helper.sh" resolve_config *)

@@ -1,6 +1,6 @@
 ---
 name: team-qa
-description: "Orchestrate the QA team through a full testing cycle — qa-lead strategy and test plan, qa-tester case writing, execution, sign-off."
+description: "QA 팀 오케스트레이션 — QA 리드 전략 수립, 테스트 계획, 테스터 케이스 작성, 실행 및 최종 승인."
 argument-hint: "[sprint | feature: system-name] [--review full|lean|solo]"
 user-invocable: true
 allowed-tools: Read, Glob, Grep, Write, Agent, AskUserQuestion, Bash(bash "*/.claude/skills/team-qa/../../hooks/yaml-helper.sh" resolve_config *)

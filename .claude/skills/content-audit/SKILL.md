@@ -1,6 +1,6 @@
 ---
 name: content-audit
-description: "Audit GDD content counts against what's implemented — planned vs built."
+description: "기획된 콘텐츠 대비 실제 구현된 수량 감사 (계획 대비 구현 현황)."
 argument-hint: "[system-name | --summary | (no arg = full audit)]"
 user-invocable: true
 allowed-tools: Read, Glob, Grep, Write, Bash(bash "*/.claude/skills/content-audit/../../hooks/yaml-helper.sh" resolve_config *)

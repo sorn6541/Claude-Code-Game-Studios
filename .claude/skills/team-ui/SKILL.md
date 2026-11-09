@@ -1,6 +1,6 @@
 ---
 name: team-ui
-description: "Orchestrate the UI team through the UX pipeline — authoring, visual design, implementation, review, polish. Uses /ux-design, /ux-review, studio templates."
+description: "UI 팀 오케스트레이션 — 기획, 비주얼 디자인, 구현, 리뷰, 폴리싱 전 과정 파이프라인 조율."
 argument-hint: "[UI feature description] [--review full|lean|solo]"
 user-invocable: true
 allowed-tools: Read, Glob, Grep, Write, Edit, Agent, AskUserQuestion, TaskCreate, TaskGet, TaskList, TaskUpdate, Bash(bash "*/.claude/skills/team-ui/../../hooks/yaml-helper.sh" resolve_config *)

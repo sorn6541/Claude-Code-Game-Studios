@@ -1,6 +1,6 @@
 ---
 name: code-review
-description: "Architectural code review — coding standards, SOLID, testability, performance concerns."
+description: "아키텍처 관점의 코드 리뷰 — 코딩 표준, SOLID 원칙, 테스트 용이성, 성능 우려사항 검토."
 argument-hint: "[path-to-file-or-directory]"
 user-invocable: true
 allowed-tools: Read, Glob, Grep, Bash(git log *), Agent, AskUserQuestion, Bash(bash "*/.claude/skills/code-review/../../hooks/yaml-helper.sh" resolve_config *)

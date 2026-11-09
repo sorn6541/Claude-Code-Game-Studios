@@ -1,6 +1,6 @@
 ---
 name: day-one-patch
-description: "Day-one launch patch — focused fix for known issues found after gold master. Mini-sprint with QA gate and rollback."
+description: "출시 당일(Day-1) 패치 — 골드 마스터 이후 발견된 알려진 이슈에 대한 집중 수정. QA 게이트 및 롤백 지원."
 argument-hint: "[scope: known-bugs | cert-feedback | all]"
 user-invocable: true
 disable-model-invocation: true

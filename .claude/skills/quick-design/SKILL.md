@@ -1,6 +1,6 @@
 ---
 name: quick-design
-description: "Lightweight spec for small changes — tuning adjustments, minor mechanics. Embeds directly into stories; skips full GDD."
+description: "소규모 변경을 위한 경량 사양서 — 밸런스 튜닝, 경미한 메커니즘 변경을 스토리에 직접 포함 (풀 GDD 생략)."
 argument-hint: "[brief description of the change]"
 user-invocable: true
 allowed-tools: Read, Glob, Grep, Write, Edit, AskUserQuestion, Bash(bash "*/.claude/skills/quick-design/../../hooks/yaml-helper.sh" resolve_config *)

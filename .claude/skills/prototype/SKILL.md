@@ -1,6 +1,6 @@
 ---
 name: prototype
-description: "Concept prototype before GDDs — throwaway HTML, Engine or Paper build, PROCEED/PIVOT/KILL/NOT ASSESSED. After /brainstorm and /setup-engine."
+description: "GDD 작성 전 콘셉트 프로토타입 검증 — 일회성 HTML, 엔진 또는 페이퍼 빌드 (PROCEED/PIVOT/KILL 판정)."
 argument-hint: "[concept-description] [--path html|engine|paper] [--review full|lean|solo] [--spike]"
 user-invocable: true
 allowed-tools: Read, Glob, Grep, Write, Edit, Agent, AskUserQuestion, Bash(bash "*/.claude/skills/prototype/../../hooks/yaml-helper.sh" resolve_config *)

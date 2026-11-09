@@ -1,6 +1,6 @@
 ---
 name: qa-plan
-description: "QA test plan for a sprint — classifies stories by Logic/Integration/Visual/UI, covers automated tests, manual cases, smoke scope."
+description: "스프린트를 위한 QA 테스트 계획 — 로직/통합/비주얼/UI 분류, 자동화 테스트 및 수동 케이스, 스모크 범위 정의."
 argument-hint: "[sprint | feature: system-name | story: path]"
 user-invocable: true
 allowed-tools: Read, Glob, Grep, Write, Edit, AskUserQuestion, Bash(bash "*/.claude/skills/qa-plan/../../hooks/yaml-helper.sh" resolve_config *)

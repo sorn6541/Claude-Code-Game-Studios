@@ -1,6 +1,6 @@
 ---
 name: test-flakiness
-description: "Find flaky tests from CI logs — aggregates pass rates, spots intermittent failures, recommends quarantine. After multiple runs."
+description: "CI 로그에서 간헐적으로 실패하는 Flaky 테스트 탐지 — 통과율 집계 및 격리 권장."
 argument-hint: "[ci-log-path | scan | registry]"
 user-invocable: true
 allowed-tools: Read, Glob, Grep, Write, Edit, Bash(ls -t *), Bash(bash "*/.claude/skills/test-flakiness/../../hooks/yaml-helper.sh" resolve_config *)

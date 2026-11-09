@@ -1,79 +1,40 @@
 ---
 name: help
-description: "What should I do next? Use when stuck or you don't know what to do."
-argument-hint: "[optional: what you just finished, e.g. 'finished design-review' or 'stuck on ADRs']"
+description: "다음에 무엇을 해야 할까요? 막히거나 진행 방향을 모를 때 실행하는 나침반 가이드."
+argument-hint: "[선택 사항: 방금 완료한 작업, 예: 'finished design-review' 또는 'stuck on ADRs']"
 user-invocable: true
 allowed-tools: Read, Glob, Grep, Bash(bash "*/.claude/skills/help/../../hooks/yaml-helper.sh" resolve_config *), Bash(bash "*/.claude/skills/help/../../scripts/story-status.sh"), Bash(bash .claude/scripts/story-status.sh*), Bash(bash .claude/scripts/artifact-check.sh *), Bash(bash ".claude/scripts/artifact-check.sh" *), Bash(bash ./.claude/scripts/artifact-check.sh *), Bash(git log *)
 model: haiku
 ---
 
-# Studio Help — What Do I Do Next?
+# 스튜디오 도움말 — 다음에 무엇을 해야 할까요?
 
-This skill is read-only — it reports findings but writes no files.
+이 스킬은 읽기 전용입니다. 현황을 보고하며 파일을 직접 작성하지 않습니다.
 
-This skill figures out exactly where you are in the game development pipeline and
-tells you what comes next. It is **lightweight** — not a full audit. For a full
-gap analysis, use `/project-stage-detect`.
+현재 게임 개발 파이프라인에서 프로젝트가 정확히 어디에 위치해 있는지 파악하고, **다음에 진행할 최적의 단계**를 안내합니다. 이는 가벼운 나침반 역할이며 전체 감사가 아닙니다. (종합적인 누락 분석이 필요한 경우 `/project-stage-detect`를 사용하십시오.)
 
-## Live Project State
+## 실시간 프로젝트 상태
 
 !`bash "${CLAUDE_SKILL_DIR}/../../hooks/yaml-helper.sh" resolve_config --keys project.stage,workflow`
 
-These are resolved before this skill runs. Use them as-is:
-
-- **`project.stage`** from the config block is the authoritative phase for Step 2
-  — it already applies the `project.yaml` → `production/stage.txt` fallback, and
-  preserves values containing spaces (`Systems Design`).
-- **`workflow`** from the config block is the tier for Steps 2 and 5 — do not re-read it.
-- If no config block rendered, shell preprocessing is disabled; fall back to the
-  defaults in `.claude/docs/config-resolution.md`.
+스킬 실행 전 위 설정이 자동 확인됩니다:
+- `project.stage`: 2단계를 판정하기 위한 공식 개발 단계 (`project.yaml` 우선, 없으면 `production/stage.txt`).
+- `workflow`: 2단계와 5단계를 위한 워크플로우 등급.
 
 ---
 
-## Step 1: Read the Catalog
+## 1단계: 워크플로우 카탈로그 확인
 
-Read `.claude/docs/workflow-catalog.yaml`. This is the authoritative list of all
-phases, their steps (in order), whether each step is required or optional, and
-the artifact globs that indicate completion.
+`.claude/docs/workflow-catalog.yaml`을 읽습니다. 모든 개발 단계, 순서별 스텝, 필수/선택 여부, 완료를 증명하는 산출물 패턴이 정의되어 있습니다.
 
 ---
 
-## Step 1b: Find Skills Not in the Catalog
+## 2단계: 현재 개발 단계 판정
 
-After reading the catalog, Glob `.claude/skills/*/SKILL.md` to get the full list
-of installed skills. For each file, extract the `name:` field from its frontmatter.
+**먼저 `workflow` 값을 확인합니다.** 만약 `minimal` 등급이라면 단계별 사다리가 아닌 미니멀 경로(`paths.minimal`)를 따르므로, 3단계를 거친 뒤 바로 **4m 단계**로 이동합니다.
 
-Compare against the `command:` values in the catalog. Any skill whose name does
-not appear as a catalog command is an **uncataloged skill** — still usable but not
-part of the phase-gated workflow.
-
-Collect these for the output in Step 7 — show them as a footer block:
-
-```
-### Also installed (not in workflow)
-- `/skill-name` — [description from SKILL.md frontmatter]
-- `/skill-name` — [description]
-```
-
-Only show this block if at least one uncataloged skill exists. Limit to the 10
-most relevant based on the user's current phase (QA skills in production, team
-skills in production/polish, etc.).
-
----
-
-## Step 2: Determine Current Phase
-
-**First, take `workflow` from the config block above.** If it is `minimal`, the
-project is on the minimal path, not the phase ladder: skip the rest of this step,
-read the session context (**Step 3**), then go to **Step 4m**. At that tier, do
-not map `project.stage` — nothing on the minimal path runs `/gate-check`, so
-the stage reads Concept however far the
-project has got, and walking the Concept phase would send a project that already
-has stories back to the concept doc, art bible and systems map.
-
-Otherwise, check in this order:
-
-1. **Take `project.stage` from the config block above** — it is already resolved. Map its value to a catalog phase key:
+그 외의 경우:
+1. `project.stage` 값을 카탈로그의 단계 키로 매핑합니다:
    - "Concept" → `concept`
    - "Systems Design" → `systems-design`
    - "Technical Setup" → `technical-setup`
@@ -81,299 +42,113 @@ Otherwise, check in this order:
    - "Production" → `production`
    - "Polish" → `polish`
    - "Release" → `release`
-
-2. **If neither is set**, infer phase from artifacts (most-advanced match wins):
-   - code root has 10+ source files → `production`
-   - `production/epics/**/story-*.md` exists → `pre-production`
-   - `docs/architecture/adr-*.md` exists → `technical-setup`
-   - `design/gdd/systems-index.md` exists → `systems-design`
-   - `design/gdd/game-concept.md` (or `design/game-brief.md`) exists → `concept`
-   - Nothing → `concept` (fresh project)
-
-3. **`workflow`** was taken at the top of this step (per
-   `.claude/docs/workflow-modes.md`). It controls whether optional docs are
-   surfaced as next steps (Step 5).
+2. 단계가 지정되지 않은 경우 산출물(코드 수, 에픽, ADR, GDD 등)을 기반으로 현재 단계를 추론합니다.
 
 ---
 
-## Step 3: Read Session Context
+## 3단계: 세션 컨텍스트 확인
 
-Read `production/session-state/active.md` if it exists — but only its STATUS
-and CHECKPOINT blocks (schema: `.claude/docs/templates/session-state.md`); the
-narrative below them can be long. Find the markers
-(`Grep pattern="<!-- /?(STATUS|CHECKPOINT) -->" path="production/session-state/active.md" output_mode="content" -n`)
-and `Read` from the first to the last. A file with no markers predates the schema: read its
-last `## Session Extract` block instead. Extract:
-- What was most recently worked on
-- Any in-progress tasks or open questions
-- Current epic/feature/task from STATUS block (if present)
+`production/session-state/active.md`가 존재하면 STATUS 및 CHECKPOINT 블록을 확인합니다:
+- 가장 최근에 진행하던 작업
+- 진행 중인 작업 또는 미해결 질문
+- STATUS 블록의 현재 에픽/기능/태스크
 
-This tells you what the user just finished or is stuck on — use it to personalize
-the output. It runs at every tier: at `minimal` it is the only read of the
-checkpoint Step 4m relies on (a checkpoint saying "Next step: /story-done" means
-the work is written). From here, `minimal` goes to **Step 4m**, not Step 4.
+이를 통해 사용자가 방금 완료했거나 막혀 있는 작업을 파악하여 맞춤형으로 안내합니다.
 
 ---
 
-## Step 4: Check Step Completion for the Current Phase
+## 4단계: 현재 단계의 스텝 완료 여부 확인
 
-For each step in the current phase (from the catalog):
-
-### Artifact-based checks
-
-**Resolve these deterministically — one call, not a glob per step:**
+카탈로그에 정의된 현재 단계의 각 스텝에 대해 산출물 검사를 실행합니다:
 
 ```
-Bash: bash .claude/scripts/artifact-check.sh --phase [current-phase]
+Bash: bash .claude/scripts/artifact-check.sh --phase [현재단계]
 ```
 
-Run it exactly as written, here and below: from the project root, with the
-relative path — no absolute path, no `cd`, no `2>&1`. This skill's permission
-grant matches that form; any other asks the user to approve it.
+스크립트의 실행 상태 매핑:
+- `PRESENT`: **완료 (Complete)**
+- `ABSENT`: **미완료 (Incomplete)**
+- `SHORT`: **미완료 (수량 부족)**
+- `PATTERN_MISS`: **미완료 (파일은 있으나 필수 마커 누락)**
+- `NO_CHECK`: **수동 확인 필요(MANUAL) 또는 알 수 없음(UNKNOWN)**
 
-It evaluates every `glob`, `pattern`, `min_count` and `any_of` in the catalog
-against the working tree and reports one line per step. Map its statuses:
-
-| status | Report as |
-|---|---|
-| `PRESENT` | **Complete** |
-| `ABSENT` | **Incomplete** |
-| `SHORT` | **Incomplete** — say how far short (`count=`/`min=` are given) |
-| `PATTERN_MISS` | **Incomplete** — the file exists but lacks its marker; say so, since "missing" would send the user to recreate a file they already have |
-| `NO_CHECK` | **MANUAL** if the step carries a `note=`, else **UNKNOWN** — completion is not trackable (e.g. repeatable implementation work) |
-
-Do not re-derive any of this with Glob/Grep. `any_of` in particular is a list of
-**alternatives** — one match is enough — and hand-evaluating it risks a false
-"incomplete": `engine-setup` is satisfied by `engine.name`
-in `project.yaml` **or** by the legacy `Engine:` line in
-`.claude/docs/technical-preferences.md`, and the script reports which alternative
-matched (`alt=`/`match=`).
-
-**`NO_CHECK` never means done.** The script prints a `NO_CHECK:` total before the
-rows; if most of a phase is NO_CHECK, say that plainly rather than implying the
-phase is nearly complete.
-
-### Special case: production phase — read `sprint-status.yaml`
-
-When the current phase is `production`, check for `production/sprint-status.yaml`
-before doing any glob-based story checks. If it exists, read it directly:
-
-- Stories with `status: in-progress` → surface as "currently active"
-- Stories with `status: ready-for-dev` → surface as "next up"
-- Stories with `status: done` → count as complete
-- Stories with `status: blocked` → surface as blocker with the `blocker` field
-
-This gives precise per-story status without markdown scanning. Skip the glob
-artifact check for the `implement` and `story-done` steps — the YAML is authoritative.
-
-### Special case: `repeatable: true` (non-production)
-
-For repeatable steps outside production (e.g. "System GDDs"), the artifact
-check tells you whether *any* work has been done, not whether it's finished.
-Label these differently — show what's been detected, then note it may be ongoing.
+### 프로덕션 단계 특수 케이스: `sprint-status.yaml` 확인
+현재 단계가 `production`인 경우 `production/sprint-status.yaml`을 직접 읽어 스토리별 상태를 파악합니다:
+- `in-progress` → 현재 진행 중인 작업으로 표시
+- `ready-for-dev` → 다음 진행할 작업으로 표시
+- `done` → 완료로 집계
+- `blocked` → 블로커 이유와 함께 차단 상태로 표시
 
 ---
 
-## Step 4m: The Minimal Path (`workflow: minimal` only)
+## 4m단계: 미니멀 경로 (`workflow: minimal` 전용)
 
-At `minimal` the route is the catalog's `paths.minimal`, not a phase: engine →
-`design/game-brief.md` → stories → `/dev-story` ↔ `/story-done`. Resolve it in
-one call:
+`minimal` 등급에서는 단계별 복잡한 검사 대신 카탈로그의 미니멀 경로(엔진 → `design/game-brief.md` → 스토리 → 구현)를 점검합니다:
 
 ```
 Bash: bash .claude/scripts/artifact-check.sh --path minimal
 ```
 
-Map the statuses exactly as in Step 4. `implement` and `story-done` are
-`NO_CHECK` by design — the story status lines below are their check. The next
-step is the first of these that applies:
-
-1. `engine-setup` not PRESENT → `/setup-engine`
-2. `game-brief` not PRESENT → `/reverse-document design [code root]` when the
-   code root already holds the game (10 or more source files, the test Step 2
-   uses for `production`): at `minimal` it writes `design/game-brief.md` from
-   what is built. Otherwise `/brainstorm` (at `minimal` it writes the one-page
-   brief), which on a built game would start a new idea.
-3. `create-stories` not PRESENT → `/create-stories` with no argument (at
-   `minimal` it builds the stories straight from the brief's MVP list)
-4. Stories exist → the list below was printed by `.claude/scripts/story-status.sh`
-   before you read this skill: one line per unfinished story, **already in
-   the route's order** — `IN_REVIEW`, then `IN_PROGRESS`, then `TODO` (a
-   `Ready` or `Not Started` story) in build order — then `BLOCKED`, `OTHER`,
-   `NO_STATUS` and the `COMPLETE` count:
-
-!`bash "${CLAUDE_SKILL_DIR}/../../scripts/story-status.sh"`
-
-   **Next up is the story on the first `IN_REVIEW`, `IN_PROGRESS` or `TODO`
-   line.** The list is already current; do not run the script again, and do
-   not re-read or re-rank the story files:
-   an `In Review` story is closed before an `In Progress` one continues — its
-   work is written, and `/story-done` is quick.
-   - `IN_REVIEW` → its work is written and waiting to be closed:
-     `/story-done [path]`
-   - `IN_PROGRESS` → it is **not** done — whatever the code or commits
-     suggest, only `/story-done` makes a story Complete. Recommend
-     `/story-done [path]` only if the user, `active.md` or the git log says
-     its implementation is written; otherwise `/dev-story [path]` to carry on
-   - `TODO` → `/dev-story [path]`
-   - a `BLOCKED` story → name it and its blocker; it is never Next up
-   - **no `IN_REVIEW`, `IN_PROGRESS` or `TODO` line, but `BLOCKED`, `OTHER` or
-     `NO_STATUS` lines remain** → nothing can be built next, and the build
-     order is **not** done. Name each of those stories with its status as
-     written, and a blocked story's blocker (read it from that story's file).
-     Next up is clearing the first of them: resolve its blocker, or give an
-     `OTHER` or `NO_STATUS` story a `Status:` line the route reads (`Ready`
-     once it can be built)
-   - **every story `Complete` (or `Done`)** → the brief's build order is done.
-     Say so, and offer three ways on: play the build; add the next stories from
-     the brief with `/create-stories`; or, if the game has outgrown a one-page
-     brief, `/settings` to raise `modes.rigor`.
-
-**At `minimal`, never present any of these as required or as a blocker:** the
-game concept doc, art bible, systems map, GDDs, `/create-epics`, a sprint plan,
-`/gate-check`, or sprint close-out (`/smoke-check`, `/team-qa`,
-`/retrospective`). The brief replaces the design docs and its build order
-replaces the sprint plan (`.claude/docs/workflow-modes.md` — `minimal` floor).
-Every one of them still runs if the user asks for it; mention one only when the
-user's argument asks about it.
-
-Then skip Steps 5 and 8, and present with the `minimal` shape in Step 7.
+우선순위 순서대로 다음 작업을 안내합니다:
+1. `engine-setup` 미완료 → `/setup-engine`
+2. `game-brief` 미완료 → 기개발 코드가 있으면 `/reverse-document design`, 없으면 `/brainstorm`
+3. `create-stories` 미완료 → `/create-stories`
+4. 스토리가 존재하는 경우:
+   - `IN_REVIEW` 상태인 스토리 → `/story-done [경로]` (작업이 완료되어 검증 및 종료 대기 중)
+   - `IN_PROGRESS` 상태인 스토리 → `/dev-story [경로]` 또는 `/story-done [경로]`
+   - `TODO` 상태인 스토리 → `/dev-story [경로]`
+   - `BLOCKED` 상태인 스토리 → 블로커 해결 안내
 
 ---
 
-## Step 5: Find Position and Identify Next Steps
+## 5단계: 현재 위치 및 다음 단계 식별
 
-From the completion data, determine:
-
-1. **Last confirmed complete step** — the furthest completed required step
-2. **Current blocker** — the first incomplete *required* step (this is what the
-   user must do next)
-3. **Optional opportunities** — incomplete *optional* steps that can be done
-   before or alongside the blocker. **Surface these per the workflow tier**: at
-   `full`, list all of them; at `standard`, list an optional doc only if it is
-   required for the current system/phase (do not flag genuinely-optional docs as
-   gaps). At `minimal` this step does not run — Step 4m replaces it
-4. **Upcoming required steps** — required steps after the current blocker
-   (show as "coming up" so user can plan ahead)
-
-If the user provided an argument (e.g. "just finished design-review"), use that
-to advance past the step they named even if the artifact check is ambiguous.
+완료 데이터를 바탕으로 다음을 도출합니다:
+1. **마지막 확인된 완료 스텝** (가장 최근 완료된 필수 작업)
+2. **현재 블로커 (다음 필수 작업)** — 사용자가 지금 바로 진행해야 할 단 하나의 필수 스텝
+3. **선택적 기회 (선택 작업)** — 병행하거나 미리 수행할 수 있는 유용한 작업
+4. **이후 예정된 필수 스텝** — 앞으로 진행될 작업 로드맵
 
 ---
 
-## Step 6: Check for In-Progress Work
+## 6단계: 진행 중인 작업 점검
 
-If `active.md` shows an active task or epic:
-- Surface it prominently at the top: "It looks like you were working on [X]"
-- Suggest continuing it or confirm if it's done
-
----
-
-## Step 7: Present Output
-
-Keep it **short and direct**. This is a quick orientation, not a report.
-
-```
-## Where You Are: [Phase Label]
-
-**In progress:** [from active.md, if any]
-
-### ✓ Done
-- [completed step name]
-- [completed step name]
-
-### → Next up (REQUIRED)
-**[Step name]** — [description]
-Command: `[/command]`
-
-### ~ Also available (OPTIONAL)
-- **[Step name]** — [description] → `/command`
-- **[Step name]** — [description] → `/command`
-
-### Coming up after that
-- [Next required step name] (`/command`)
-- [Next required step name] (`/command`)
+`active.md`에 진행 중인 작업이 있다면 상단에 눈에 띄게 안내합니다:
+"현재 [작업명]을 진행 중이셨던 것으로 보입니다."
 
 ---
-Approaching **[next phase]** gate → run `/gate-check` when ready.
+
+## 7단계: 결과 제시 (출력 형식)
+
+답변은 **간결하고 명확하게** 작성합니다:
+
+```markdown
+## 현재 위치: [개발 단계명]
+
+**진행 중인 작업:** [active.md에서 확인된 작업]
+
+### ✓ 완료됨
+- [완료된 작업명]
+- [완료된 작업명]
+
+### → 다음 단계 (필수)
+**[작업명]** — [설명]
+실행 명령: `[/명령어]`
+
+### ~ 선택 사항
+- **[작업명]** — [설명] → `/명령어`
+
+### 그 다음 예정 작업
+- [이후 필수 작업명] (`/명령어`)
+
+---
+**[다음 단계명]** 게이트에 근접했습니다 → 준비가 완료되면 `/gate-check`를 실행하십시오.
 ```
 
-**At `minimal`** use this shape instead — no phase label, no gate line. `N`
-counts only stories whose status line says `Complete` or `Done`, and only those
-go under ✓ Done. `N` and `M` are the two numbers on the `COMPLETE` line; it
-names no finished story, so ✓ Done gives their count, not their titles:
-
-```
-## Where You Are: Minimal path — [N] of [M] stories complete
-
-**In progress:** [from active.md, if any]
-
-### ✓ Done
-- Engine: [engine] · Game brief · [N] stories
-
-### → Next up
-**[Story NNN: title]** — [what it delivers]
-Command: `/story-done [story-path]` for an In Review story, or an In Progress one whose work is written; otherwise `/dev-story [story-path]`
-
-### Coming up after that
-- [the next Ready stories in build order, at most 3]
-```
-
-**Formatting rules:**
-- `✓` for confirmed complete
-- `→` for the current required next step (only one — the first blocker)
-- `~` for optional steps available now
-- Show commands inline as backtick code
-- If a step has no command (e.g. "Implement Stories"), explain what to do instead of showing a slash command
-- For MANUAL steps, ask the user: "I can't tell if [step] is done — has it been completed?"
-
-Verdict: **COMPLETE** — next steps identified.
-
 ---
 
-## Step 8: Gate Warning (if close)
+## 협업 프로토콜 (Collaborative Protocol)
 
-Skip this step at `minimal` — the minimal path has no phase gates.
-
-After the current phase's steps, check if the user is likely approaching a gate:
-- If all required steps in the current phase are complete (or nearly complete),
-  add: "You're close to the **[Current] → [Next]** gate. Run `/gate-check` when ready."
-- If multiple required steps remain, skip the gate warning — it's not relevant yet.
-
----
-
-## Step 9: Escalation Paths
-
-After the recommendations, if the user seems stuck or confused, add:
-
-```
----
-Need more detail?
-- `/project-stage-detect` — full gap analysis with all missing artifacts listed
-- `/gate-check` — formal readiness check for your next phase
-- `/start` — re-orient from scratch
-- `/settings` — if the process feels mismatched to your project, adjust
-  `modes.rigor`. Apply the change-triggers in
-  `.claude/docs/settings-guidance.md § 4`: a **lower** tier when the user sounds
-  overwhelmed by process (and rigor isn't already `minimal`), or a **higher** tier
-  when the project has outgrown it (many systems, or in Production on
-  `workflow: minimal`)
-```
-
-Only show this if the user's input suggested confusion (e.g. "I don't know", "stuck",
-"lost", "not sure"). Don't show it for simple "what's next?" queries. Show the
-`/settings` rigor line only when a `settings-guidance.md § 4` trigger actually
-fires — the user sounds overwhelmed (and rigor isn't already `minimal`), or the
-project has outgrown its tier — not on every confused query. At `minimal`, leave
-out the `/gate-check` line: the minimal path has no phase gates (Step 4m).
-
----
-
-## Collaborative Protocol
-
-- **Never auto-run the next skill.** Recommend it, let the user invoke it.
-- **Ask about MANUAL steps** rather than assuming complete or incomplete.
-- **Match the user's tone** — if they sound stressed ("I'm totally lost"), be
-  reassuring and give one action, not a list of six.
-- **One primary recommendation** — the user should leave knowing exactly one thing
-  to do next. Optional steps and "coming up" are secondary context.
+- **다음 스킬을 절대 자동으로 실행하지 마십시오.** 권장 사항을 제시하고, 사용자가 직접 호출하도록 안내합니다.
+- **수동 확인(MANUAL) 스텝**에 대해서는 임의로 판단하지 말고 사용자에게 완료 여부를 묻습니다.
+- **단 하나의 핵심 추천**: 사용자가 답변을 읽고 나서 '지금 당장 무엇을 해야 하는가'를 명확히 알 수 있도록 단 하나의 1순위 액션을 제시하십시오.

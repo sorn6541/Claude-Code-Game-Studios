@@ -1,6 +1,6 @@
 ---
 name: balance-check
-description: "Find balance outliers, broken progressions, degenerate strategies, economy imbalances in formulas and data. 'Check game balance'."
+description: "수식 및 데이터에서 밸런스 이상치, 깨진 진행 곡선, 퇴행적 전략, 경제 불균형 탐색 ('게임 밸런스 확인')."
 argument-hint: "[system-name|path-to-data-file]"
 user-invocable: true
 allowed-tools: Read, Glob, Grep, Write, AskUserQuestion, Bash(bash "*/.claude/skills/balance-check/../../hooks/yaml-helper.sh" resolve_config *)

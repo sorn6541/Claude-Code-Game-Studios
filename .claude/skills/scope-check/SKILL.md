@@ -1,6 +1,6 @@
 ---
 name: scope-check
-description: "Scope creep check — current scope versus the original plan. Flags additions, quantifies bloat, recommends cuts. 'Any scope creep?'"
+description: "스코프 크립(범위 팽창) 점검 — 원래 계획 대비 현재 스코프 비교. 추가된 사항 플래그, 비대화 수치화, 삭감 권고."
 argument-hint: "[feature-name or sprint-N]"
 user-invocable: true
 allowed-tools: Read, Glob, Grep, Bash(git log *)

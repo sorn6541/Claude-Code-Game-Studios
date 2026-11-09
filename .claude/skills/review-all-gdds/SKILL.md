@@ -1,6 +1,6 @@
 ---
 name: review-all-gdds
-description: "Holistic cross-GDD review — contradictions between systems, dominant strategies, economic imbalance, cognitive overload, pillar drift."
+description: "모든 GDD에 대한 종합 검토 — 시스템 간 모순, 지배적 전략, 경제 불균형, 인지 부하, 핵심 기둥(Pillar) 이탈 점검."
 argument-hint: "[focus: full | consistency | design-theory | since-last-review]"
 user-invocable: true
 allowed-tools: Read, Glob, Grep, Write, AskUserQuestion, Agent, Bash(bash "*/.claude/skills/review-all-gdds/../../hooks/yaml-helper.sh" resolve_config *), Bash(bash .claude/scripts/review-scope.sh*)

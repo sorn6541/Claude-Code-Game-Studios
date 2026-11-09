@@ -1,6 +1,6 @@
 ---
 name: team-live-ops
-description: "Orchestrate the live-ops team — live-ops-designer, economy-designer, analytics-engineer, community-manager, writer — for a season or live event."
+description: "라이브 서비스 팀 오케스트레이션 — 라이브옵스 디자이너, 경제 디자이너, 분석 엔지니어, 커뮤니티 매니저 조율."
 argument-hint: "[season name or event description] [--review full|lean|solo]"
 user-invocable: true
 allowed-tools: Read, Glob, Grep, Write, Edit, Agent, AskUserQuestion, TaskCreate, TaskGet, TaskList, TaskUpdate, Bash(bash "*/.claude/skills/team-live-ops/../../hooks/yaml-helper.sh" resolve_config *)

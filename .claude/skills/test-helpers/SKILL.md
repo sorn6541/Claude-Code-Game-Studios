@@ -1,6 +1,6 @@
 ---
 name: test-helpers
-description: "Generate engine-specific test helper libraries — assertion utilities, factory functions, mocks in the engine's test folder. Reduces boilerplate."
+description: "엔진별 테스트 헬퍼 라이브러리 생성 — 어설션 유틸리티, 팩토리 함수, 목(Mock) 객체 생성으로 보일러플레이트 감소."
 argument-hint: "[system-name | all | scaffold]"
 user-invocable: true
 allowed-tools: Read, Glob, Grep, Write, Bash(bash "*/.claude/skills/test-helpers/../../hooks/yaml-helper.sh" resolve_config *)

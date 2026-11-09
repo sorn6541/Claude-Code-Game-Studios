@@ -1,6 +1,6 @@
 ---
 name: tech-debt
-description: "Track, categorize and prioritize technical debt across the codebase — scans for debt indicators, maintains a register."
+description: "코드베이스 전반의 기술 부채 추적, 분류 및 우선순위 지정 — 부채 지표 스캔 및 레지스터 관리."
 argument-hint: "[scan|add|prioritize|report]"
 user-invocable: true
 allowed-tools: Read, Glob, Grep, Write, Edit, AskUserQuestion, Bash(bash "*/.claude/skills/tech-debt/../../hooks/yaml-helper.sh" resolve_config *)

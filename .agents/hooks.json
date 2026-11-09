@@ -1,0 +1,42 @@
+{
+  "game-studios-lifecycle": {
+    "SessionStart": [
+      {
+        "type": "command",
+        "command": "bash -c 'for p in hooks/dispatch.sh .agents/hooks/dispatch.sh; do [ -f \"$p\" ] && exec bash \"$p\" \"$@\"; done' -- session-start",
+        "timeout": 15
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "run_command|write_file|edit_file|read_file",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash -c 'for p in hooks/dispatch.sh .agents/hooks/dispatch.sh; do [ -f \"$p\" ] && exec bash \"$p\" \"$@\"; done' -- pre-tool-use",
+            "timeout": 15
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "write_file|edit_file",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash -c 'for p in hooks/dispatch.sh .agents/hooks/dispatch.sh; do [ -f \"$p\" ] && exec bash \"$p\" \"$@\"; done' -- post-tool-use",
+            "timeout": 15
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "type": "command",
+        "command": "bash -c 'for p in hooks/dispatch.sh .agents/hooks/dispatch.sh; do [ -f \"$p\" ] && exec bash \"$p\" \"$@\"; done' -- stop",
+        "timeout": 10
+      }
+    ]
+  }
+}

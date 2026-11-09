@@ -1,6 +1,6 @@
 ---
 name: release-checklist
-description: "Pre-release checklist — build verification, certification requirements, store metadata, launch readiness."
+description: "출시 전 체크리스트 — 빌드 검증, 플랫폼 인증 요구사항, 스토어 메타데이터, 론칭 준비도 점검."
 argument-hint: "[platform: pc|console|mobile|all]"
 user-invocable: true
 allowed-tools: Read, Glob, Grep, Write, Bash(bash "*/.claude/skills/release-checklist/../../hooks/yaml-helper.sh" resolve_config *)

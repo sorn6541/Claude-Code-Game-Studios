@@ -1,6 +1,6 @@
 ---
 name: bug-triage
-description: "Re-evaluate open bugs — priority vs severity, assign to sprints, surface systemic trends. Run when the count grows."
+description: "미해결 버그 재평가 — 우선순위 대 심각도 조정, 스프린트 할당, 시스템적 경향 파악."
 argument-hint: "[sprint | full | trend]"
 user-invocable: true
 allowed-tools: Read, Glob, Grep, Write, Edit, Bash(bash "*/.claude/skills/bug-triage/../../hooks/yaml-helper.sh" resolve_config *)

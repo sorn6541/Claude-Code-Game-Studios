@@ -38,7 +38,7 @@ fi
 # Exit on error for debugging (but don't fail the session)
 set +e
 
-echo "=== Checking for Documentation Gaps ==="
+echo "=== 문서 누락(Gap) 검사 ==="
 
 # --- Check 0: Fresh project detection (suggests /start) ---
 FRESH_PROJECT=true
@@ -120,10 +120,10 @@ fi
 
 if [ "$FRESH_PROJECT" = true ]; then
   echo ""
-  echo "🚀 NEW PROJECT: No engine configured, no game concept, no source code."
-  echo "   This looks like a fresh start! Run: /start"
+  echo "🚀 신규 프로젝트: 설정된 엔진, 게임 콘셉트, 소스 코드가 없습니다."
+  echo "   새로운 프로젝트를 시작합니다! 실행 권장: /start"
   echo ""
-  echo "💡 To get a comprehensive project analysis, run: /project-stage-detect"
+  echo "💡 프로젝트 상태를 종합 분석하려면 실행하십시오: /project-stage-detect"
   echo "==================================="
   exit 0
 fi

@@ -1,6 +1,6 @@
 ---
 name: sprint-status
-description: "Fast, concise sprint snapshot — burndown and emerging risks for situational awareness. 'How is the sprint going?'"
+description: "빠르고 간결한 스프린트 현황 스냅샷 — 번다운 추이 및 대두되는 리스크 파악."
 argument-hint: "[sprint-number or blank for current]"
 user-invocable: true
 allowed-tools: Read, Glob, Grep, Bash(bash "*/.claude/skills/sprint-status/../../hooks/yaml-helper.sh" resolve_config *), Bash(bash "*/.claude/skills/sprint-status/../../scripts/story-status.sh"), Bash(bash .claude/scripts/story-status.sh*)

@@ -1,6 +1,6 @@
 ---
 name: ux-review
-description: "Validate a UX spec, HUD design or pattern library — accessibility, GDD alignment, readiness. APPROVED / NOT ASSESSED / NEEDS REVISION / MAJOR REVISION NEEDED."
+description: "UX 사양서, HUD 디자인 또는 패턴 라이브러리 검증 — 접근성, GDD 일치도, 구현 준비도 평가."
 argument-hint: "[file-path or 'all' or 'hud' or 'patterns']"
 user-invocable: true
 allowed-tools: Read, Glob, Grep, Bash(bash "*/.claude/skills/ux-review/../../hooks/yaml-helper.sh" resolve_config *)

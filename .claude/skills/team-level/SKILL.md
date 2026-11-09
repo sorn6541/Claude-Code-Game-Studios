@@ -1,6 +1,6 @@
 ---
 name: team-level
-description: "Orchestrate the level team — level-designer, narrative-director, world-builder, art-director, systems-designer, qa-tester — for complete area creation."
+description: "레벨 제작 팀 오케스트레이션 — 레벨 디자이너, 내러티브 디렉터, 월드 빌더, 아트 디렉터, 시스템 디자이너 조율."
 argument-hint: "[level name or area to design] [--review full|lean|solo]"
 user-invocable: true
 allowed-tools: Read, Glob, Grep, Write, Edit, Agent, AskUserQuestion, TaskCreate, TaskGet, TaskList, TaskUpdate, Bash(bash "*/.claude/skills/team-level/../../hooks/yaml-helper.sh" resolve_config *)

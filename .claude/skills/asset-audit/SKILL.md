@@ -1,6 +1,6 @@
 ---
 name: asset-audit
-description: "Audit assets against naming conventions, file size budgets, format standards. Finds orphaned assets, missing references."
+description: "명명 규칙, 파일 크기 예산, 포맷 표준에 따른 에셋 감사. 고아 에셋 및 누락된 참조 식별."
 argument-hint: "[category|all]"
 user-invocable: true
 allowed-tools: Read, Glob, Grep, Bash(stat *), Bash(file *), Bash(od *), Bash(wc *), Bash(du *)

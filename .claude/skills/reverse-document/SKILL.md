@@ -1,6 +1,6 @@
 ---
 name: reverse-document
-description: "Generate missing design or architecture docs from existing implementation — works backwards from code and prototypes."
+description: "기존 구현물로부터 누락된 기획서나 아키텍처 문서를 역으로 생성 — 코드와 프로토타입 기반 역공학 문서화."
 argument-hint: "<type> <path> (e.g., 'design src/gameplay/combat' or 'architecture Assets/Scripts/Core')"
 user-invocable: true
 allowed-tools: Read, Glob, Grep, Write, Edit, Bash(bash "*/.claude/skills/reverse-document/../../hooks/yaml-helper.sh" resolve_config *)

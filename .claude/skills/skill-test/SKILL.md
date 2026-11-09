@@ -1,6 +1,6 @@
 ---
 name: skill-test
-description: "Validate skill files for structural compliance and behavioral correctness. Four modes: static linter, spec, category rubric, audit."
+description: "스킬 파일의 구조적 규정 준수 및 동작 정확성 검증. 정적 린터, 사양, 카테고리 루브릭, 감사 4개 모드."
 argument-hint: "static [skill-name | all] | spec [skill-or-agent-name] | category [skill-or-agent-name | all] | audit"
 user-invocable: true
 allowed-tools: Read, Glob, Grep, Write, Bash(bash "*/.claude/skills/skill-test/../../hooks/yaml-helper.sh" resolve_config *), Bash(bash .claude/scripts/agent-check.sh*), Bash(bash .claude/scripts/compat-inventory.sh*)

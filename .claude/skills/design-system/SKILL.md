@@ -1,6 +1,6 @@
 ---
 name: design-system
-description: "Section-by-section GDD authoring for one system — walks through each required section, cross-references dependencies."
+description: "단일 시스템에 대한 섹션별 GDD 작성 — 필수 섹션 안내 및 상호 의존성 교차 참조."
 argument-hint: "<system-name> [--review full|lean|solo]"
 user-invocable: true
 allowed-tools: Read, Glob, Grep, Write, Edit, Agent, AskUserQuestion, TaskCreate, TaskGet, TaskList, TaskUpdate, Bash(bash "*/.claude/skills/design-system/../../hooks/yaml-helper.sh" resolve_config *), Bash(bash .claude/scripts/registry.sh *)

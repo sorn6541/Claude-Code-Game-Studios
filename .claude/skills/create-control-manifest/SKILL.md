@@ -1,6 +1,6 @@
 ---
 name: create-control-manifest
-description: "Builds a short list of must-do and never-do coding rules per system from accepted ADRs. Use when the user wants programmer rules or a cheat sheet from the ADRs, or needs it regenerated after ADR changes."
+description: "승인된 ADR로부터 시스템별 필수 준수 및 금지 코딩 규칙 요약본(치트 시트) 생성."
 argument-hint: "[update — regenerate from current ADRs] [--review full|lean|solo]"
 user-invocable: true
 allowed-tools: Read, Glob, Grep, Write, Agent, AskUserQuestion, Bash(bash "*/.claude/skills/create-control-manifest/../../hooks/yaml-helper.sh" resolve_config *), Bash(bash .claude/scripts/adr-status.sh*), Bash(bash .claude/scripts/md-section.sh *)

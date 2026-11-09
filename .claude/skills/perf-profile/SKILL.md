@@ -1,6 +1,6 @@
 ---
 name: perf-profile
-description: "Performance profiling — find bottlenecks, measure against budgets, produce ranked optimization recommendations."
+description: "성능 프로파일링 — 병목 지점 탐색, 성능 예산 대비 측정, 우선순위별 최적화 권장안 도출."
 argument-hint: "[system-name or 'full']"
 user-invocable: true
 allowed-tools: Read, Glob, Grep, Write, Bash(bash "*/.claude/skills/perf-profile/../../hooks/yaml-helper.sh" resolve_config *), Bash(bash "*/.claude/skills/perf-profile/../../hooks/yaml-helper.sh" get_effective_yaml_key *)

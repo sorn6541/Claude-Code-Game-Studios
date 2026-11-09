@@ -1,6 +1,6 @@
 ---
 name: security-audit
-description: "Security audit — save tampering, cheat vectors, network exploits, data exposure, input validation. Before public or multiplayer release."
+description: "보안 감사 — 세이브 파일 변조, 치트 취약점, 네트워크 악용, 민감 데이터 노출, 입력값 검증."
 argument-hint: "[full | network | save | input | quick]"
 user-invocable: true
 allowed-tools: Read, Glob, Grep, Write, Agent, Bash(bash "*/.claude/skills/security-audit/../../hooks/yaml-helper.sh" resolve_config *)

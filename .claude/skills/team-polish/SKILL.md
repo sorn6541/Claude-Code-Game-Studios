@@ -1,6 +1,6 @@
 ---
 name: team-polish
-description: "Orchestrate the polish team — performance-analyst, technical-artist, sound-designer, qa-tester — to optimize and harden a feature or area."
+description: "폴리싱 팀 오케스트레이션 — 성능 분석가, 테크니컬 아티스트, 사운드 디자이너, QA 테스터 조율 (최적화 및 품질 강화)."
 argument-hint: "[feature or area to polish] [--review full|lean|solo]"
 user-invocable: true
 allowed-tools: Read, Glob, Grep, Write, Edit, Agent, AskUserQuestion, TaskCreate, TaskGet, TaskList, TaskUpdate, Bash(bash "*/.claude/skills/team-polish/../../hooks/yaml-helper.sh" resolve_config *)

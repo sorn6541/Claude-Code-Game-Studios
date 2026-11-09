@@ -1,6 +1,6 @@
 ---
 name: team-audio
-description: "Orchestrate the audio team — audio-director, sound-designer, technical-artist, gameplay-programmer — direction through implementation."
+description: "오디오 팀 오케스트레이션 — 오디오 디렉터, 사운드 디자이너, 테크니컬 아티스트, 게임플레이 프로그래머 조율."
 argument-hint: "[feature or area to design audio for] [--review full|lean|solo]"
 user-invocable: true
 allowed-tools: Read, Glob, Grep, Write, Edit, Agent, AskUserQuestion, TaskCreate, TaskGet, TaskList, TaskUpdate, Bash(bash "*/.claude/skills/team-audio/../../hooks/yaml-helper.sh" resolve_config *)

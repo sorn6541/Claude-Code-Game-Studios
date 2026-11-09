@@ -1,6 +1,6 @@
 ---
 name: adopt
-description: "Brownfield audit — do existing artifacts actually work? Numbered migration plan. Unlike /project-stage-detect, checks compliance not existence."
+description: "기존 프로젝트(Brownfield) 감사 — 기존 산출물이 실제로 작동하는가? 단계별 마이그레이션 계획 수립. 단순 존재 여부가 아닌 규정 준수 여부를 검사."
 argument-hint: "[focus: full | gdds | adrs | stories | infra]"
 user-invocable: true
 allowed-tools: Read, Glob, Grep, Write, AskUserQuestion, Bash(bash "*/.claude/skills/adopt/../../hooks/yaml-helper.sh" resolve_config *), Bash(bash .claude/scripts/gdd-structure-check.sh *), Bash(bash .claude/scripts/migrate-v1-config.sh --dry-run*)

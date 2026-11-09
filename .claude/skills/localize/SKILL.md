@@ -1,6 +1,6 @@
 ---
 name: localize
-description: "Localization pipeline — find hardcoded strings, extract string tables, cultural review, VO, RTL, enforce string freeze."
+description: "현지화(Localization) 파이프라인 — 하드코딩된 문자열 탐색, 스트링 테이블 추출, 문화권 검토, 보이스오버, 텍스트 프리징."
 argument-hint: "[scan|extract|validate|status|brief|cultural-review|vo-pipeline|rtl-check|freeze|qa]"
 user-invocable: true
 allowed-tools: Read, Glob, Grep, Write, Agent, AskUserQuestion, Bash(bash "*/.claude/skills/localize/../../hooks/yaml-helper.sh" resolve_config *)

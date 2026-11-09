@@ -1,0 +1,14 @@
+{
+  "name": "game-studios",
+  "displayName": "Antigravity Game Studios",
+  "description": "Indie game development framework managed through 49 coordinated specialist agents, 70+ workflow skills, and multi-engine support (Godot, Unity, Unreal).",
+  "version": "1.2.0",
+  "author": {
+    "name": "Donchitos (Ported to Antigravity)"
+  },
+  "suggestedPrompts": [
+    "Run /start to begin the guided onboarding workflow",
+    "Call the producer agent to review sprint status and milestones",
+    "Run /smoke-check to validate the game build and test suite"
+  ]
+}

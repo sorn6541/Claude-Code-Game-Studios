@@ -1,6 +1,6 @@
 ---
 name: onboard
-description: "Onboarding doc for a new contributor or agent — project state, conventions, priorities relevant to the specified role."
+description: "새로운 기여자를 위한 온보딩 문서 — 프로젝트 현황, 컨벤션, 지정된 역할에 맞는 우선순위 요약."
 argument-hint: "[role|area]"
 user-invocable: true
 allowed-tools: Read, Glob, Grep, Write, Bash(bash "*/.claude/skills/onboard/../../hooks/yaml-helper.sh" resolve_config *)

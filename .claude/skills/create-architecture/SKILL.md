@@ -1,6 +1,6 @@
 ---
 name: create-architecture
-description: "Author the architecture blueprint before code is written. Validates decisions against the pinned engine, flags knowledge gaps."
+description: "코드 작성 전 아키텍처 청사진 수립. 고정된 엔진 버전 대비 의사결정 검증 및 기술적 공백 식별."
 argument-hint: "[focus-area: full | layers | data-flow | api-boundaries | adr-audit] [--review full|lean|solo]"
 user-invocable: true
 allowed-tools: Read, Glob, Grep, Write, Edit, AskUserQuestion, Agent, Bash(bash "*/.claude/skills/create-architecture/../../hooks/yaml-helper.sh" resolve_config *), Bash(bash .claude/scripts/registry.sh *)

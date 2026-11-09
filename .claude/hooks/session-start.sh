@@ -52,16 +52,16 @@ fi
 # again with source `compact`, and PostCompact output never reaches the
 # conversation, so a checkpoint seen after /compact came from this script.
 
-echo "=== Claude Code Game Studios — Session Context ==="
+echo "=== Claude Code Game Studios — 세션 컨텍스트 ==="
 
 # Current branch
 BRANCH=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)
 if [ -n "$BRANCH" ]; then
-    echo "Branch: $BRANCH"
+    echo "브랜치: $BRANCH"
 
     # Recent commits
     echo ""
-    echo "Recent commits:"
+    echo "최근 커밋:"
     git log --oneline -5 2>/dev/null | while read -r line; do
         echo "  $line"
     done
@@ -89,7 +89,7 @@ if [ -z "$REVIEW_MODE" ]; then
     REVIEW_MODE="solo"
 fi
 echo ""
-echo "Review mode: $REVIEW_MODE"
+echo "리뷰 모드: $REVIEW_MODE"
 
 # Schema validation — surface invalid enum values in
 # project.yaml and project.local.yaml so typos like `automation: chaotic`
@@ -167,13 +167,13 @@ fi
 LATEST_SPRINT=$(ls -t production/sprints/sprint-*.md 2>/dev/null | head -1)
 if [ -n "$LATEST_SPRINT" ]; then
     echo ""
-    echo "Active sprint: $(basename "$LATEST_SPRINT" .md)"
+    echo "활성 스프린트: $(basename "$LATEST_SPRINT" .md)"
 fi
 
 # Current milestone
 LATEST_MILESTONE=$(ls -t production/milestones/*.md 2>/dev/null | head -1)
 if [ -n "$LATEST_MILESTONE" ]; then
-    echo "Active milestone: $(basename "$LATEST_MILESTONE" .md)"
+    echo "활성 마일스톤: $(basename "$LATEST_MILESTONE" .md)"
 fi
 
 # Open bug count: bug files whose header Status is not Closed or Verified
@@ -185,7 +185,7 @@ if [ -f .claude/scripts/bug-stats.sh ]; then
                | awk -F'\t' '$1 == "open" { print $2 }')
 fi
 if [ -n "$BUG_OPEN" ] && [ "$BUG_OPEN" -gt 0 ]; then
-    echo "Open bugs: $BUG_OPEN"
+    echo "미해결 버그: ${BUG_OPEN}건"
 fi
 
 # Code health quick check.
@@ -218,7 +218,7 @@ if [ -n "$CODE_ROOT" ] && [ -d "$CODE_ROOT" ]; then
     FIXME_COUNT=$(grep -rI "${_SS_SRC[@]}" "FIXME" "$CODE_ROOT/" 2>/dev/null | wc -l | tr -d ' ')
     if [ "$TODO_COUNT" -gt 0 ] || [ "$FIXME_COUNT" -gt 0 ]; then
         echo ""
-        echo "Code health: ${TODO_COUNT} TODOs, ${FIXME_COUNT} FIXMEs in ${CODE_ROOT}/"
+        echo "코드 건전성: TODO ${TODO_COUNT}개, FIXME ${FIXME_COUNT}개 (${CODE_ROOT}/)"
     fi
 fi
 
@@ -241,11 +241,11 @@ if [ -f project.yaml ] && [ -f CLAUDE.md ]; then
           project.yaml 2>/dev/null | tr '[:upper:]' '[:lower:]')
     if [ -n "$ERI" ] && [ -n "$CFG" ] && [ "$ERI" != "$CFG" ]; then
         echo ""
-        echo "!! ENGINE REFERENCE MISMATCH"
+        echo "!! 엔진 레퍼런스 불일치"
         echo "   project.yaml engine.name : $CFG"
         echo "   CLAUDE.md imports        : docs/engine-reference/$ERI/VERSION.md"
-        echo "   Every session is loading the $ERI reference on a $CFG project."
-        echo "   Fix: re-run /setup-engine, or edit the ENGINE-REFERENCE-IMPORT line."
+        echo "   $CFG 프로젝트에서 $ERI 레퍼런스가 로드되고 있습니다."
+        echo "   해결책: /setup-engine 재실행 또는 ENGINE-REFERENCE-IMPORT 라인 수정."
     fi
 fi
 
@@ -267,9 +267,9 @@ if [ -f .claude/hooks/yaml-helper.sh ] && ! command -v session_state_enabled >/d
 fi
 if [ -f "$STATE_FILE" ] && { ! command -v session_state_enabled >/dev/null 2>&1 || session_state_enabled; }; then
     echo ""
-    echo "=== ACTIVE SESSION STATE DETECTED ==="
-    echo "A previous session left state at: $STATE_FILE"
-    echo "Read this file to recover context and continue where you left off."
+    echo "=== 활성 세션 상태 감지됨 ==="
+    echo "이전 세션의 상태 파일이 발견되었습니다: $STATE_FILE"
+    echo "이 파일을 읽어 컨텍스트를 복원하고 중단된 지점부터 작업을 계속하십시오."
     echo ""
     # The CHECKPOINT region, as the schema in
     # .claude/docs/templates/session-state.md defines it.
@@ -326,30 +326,30 @@ if [ -f "$STATE_FILE" ] && { ! command -v session_state_enabled >/dev/null 2>&1 
         # characters of hook output and shows only a 2,000-character preview
         # past that, so an uncapped checkpoint could cut itself -- and anything
         # printed after it -- out of what Claude sees.
-        echo "Checkpoint:"
+        echo "체크포인트:"
         printf '%s\n' "$CHECKPOINT" | awk '
             { n++; c += length($0) + 1 }
             n > 25 || c > 3000 { cut = 1; exit }
             { print }
             END { if (cut) exit 3 }'
         if [ $? -eq 3 ]; then
-            echo "  ... checkpoint truncated ($(printf '%s\n' "$CHECKPOINT" | wc -l | tr -d ' ') lines) — read $STATE_FILE for the rest"
+            echo "  ... 체크포인트 요약됨 ($(printf '%s\n' "$CHECKPOINT" | wc -l | tr -d ' ') 줄) — 전체 내용은 $STATE_FILE 참조"
         fi
-        echo "  ... ($TOTAL_LINES total lines — read the full file for detail)"
+        echo "  ... (총 $TOTAL_LINES 줄 — 세부 내용은 파일 전체를 읽으십시오)"
     else
-        echo "Quick summary (first 20 lines — no CHECKPOINT block in this file):"
+        echo "빠른 요약 (처음 20줄 — 이 파일에 CHECKPOINT 블록 없음):"
         head -20 "$STATE_FILE" 2>/dev/null
-        echo "  ... ($TOTAL_LINES total lines — read the full file to continue)"
-        echo "  NOTE: re-create from .claude/docs/templates/session-state.md so"
-        echo "        recovery reads a bounded checkpoint instead of a slice."
+        echo "  ... (총 $TOTAL_LINES 줄 — 계속하려면 파일 전체를 읽으십시오)"
+        echo "  참고: 복원 시 제한된 체크포인트를 읽을 수 있도록"
+        echo "        .claude/docs/templates/session-state.md에서 재생성하십시오."
     fi
     # Rotation is an OBSERVATION, never an action: helpers in .claude/scripts/
     # emit observations, never verdicts (CLAUDE.md). The user decides.
     if [ "${TOTAL_LINES:-0}" -gt 200 ] 2>/dev/null; then
-        echo "  Note: $TOTAL_LINES lines. Narrative can be rotated into"
-        echo "        production/session-logs/ — bash .claude/scripts/rotate-session-state.sh"
+        echo "  참고: $TOTAL_LINES 줄입니다. 다음 명령으로 이전 기록을 보관할 수 있습니다:"
+        echo "        bash .claude/scripts/rotate-session-state.sh"
     fi
-    echo "=== END SESSION STATE PREVIEW ==="
+    echo "=== 세션 상태 미리보기 종료 ==="
 fi
 
 echo "==================================="

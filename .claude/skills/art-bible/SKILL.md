@@ -1,6 +1,6 @@
 ---
 name: art-bible
-description: "Author the Art Bible — visual identity gating asset production. Run before /map-systems."
+description: "아트 바이블(Art Bible) 작성 — 에셋 제작의 기준이 되는 시각적 정체성 수립. /map-systems 실행 전에 수행."
 argument-hint: "[--review full|lean|solo]"
 user-invocable: true
 allowed-tools: Read, Glob, Grep, Write, Edit, Agent, AskUserQuestion, Bash(bash "*/.claude/skills/art-bible/../../hooks/yaml-helper.sh" resolve_config *)

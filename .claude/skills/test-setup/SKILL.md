@@ -1,6 +1,6 @@
 ---
 name: test-setup
-description: "Scaffold the test framework and CI — tests/ directory, engine test runner, GitHub Actions workflow. Once, before the first sprint."
+description: "테스트 프레임워크 및 CI 스캐폴딩 — tests/ 디렉토리, 엔진 테스트 러너, GitHub Actions 워크플로우 구성."
 argument-hint: "[force]"
 user-invocable: true
 allowed-tools: Read, Glob, Grep, Write, Bash(grep -q 'com.unity.test-framework' Packages/manifest.json), Bash(bash "*/.claude/skills/test-setup/../../hooks/yaml-helper.sh" resolve_config *)

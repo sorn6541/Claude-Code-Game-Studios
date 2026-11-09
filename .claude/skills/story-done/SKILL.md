@@ -1,6 +1,6 @@
 ---
 name: story-done
-description: "Closes a finished story: verifies each acceptance criterion, checks for design or ADR deviations and updates its status. Use when the user says a story is done, finished or ready to close."
+description: "완료된 스토리 종료 — 각 인수 기준 검증, 설계 또는 ADR 편차 확인 후 상태 업데이트."
 argument-hint: "[story-file-path] [--review full|lean|solo]"
 user-invocable: true
 disable-model-invocation: true

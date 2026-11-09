@@ -1,6 +1,6 @@
 ---
 name: dev-story
-description: "Implements one story in code with tests, following its ADRs. Use when the user says to build, implement or start working on a story. Not for checking readiness beforehand or closing the story after."
+description: "해당 스토리의 ADR을 준수하여 테스트를 포함한 코드로 구현. 스토리 작업을 시작할 때 사용."
 argument-hint: "[story-path]"
 user-invocable: true
 disable-model-invocation: true

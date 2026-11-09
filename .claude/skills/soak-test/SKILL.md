@@ -1,6 +1,6 @@
 ---
 name: soak-test
-description: "Soak test protocol for extended play — what to observe and log for slow leaks, fatigue, late-appearing edge cases."
+description: "장시간 플레이를 위한 숙성(Soak) 테스트 프로토콜 — 메모리 누수, 피로도, 후반 엣지 케이스 관찰 및 로깅."
 argument-hint: "[duration: 30m | 1h | 2h | 4h] [focus: memory | stability | balance | all]"
 user-invocable: true
 allowed-tools: Read, Glob, Grep, Write, Bash(bash "*/.claude/skills/soak-test/../../hooks/yaml-helper.sh" resolve_config *)

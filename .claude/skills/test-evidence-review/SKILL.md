@@ -1,6 +1,6 @@
 ---
 name: test-evidence-review
-description: "Quality review of test files and evidence — goes beyond existence, evaluates assertion coverage. ADEQUATE/INCOMPLETE/MISSING/NOT ASSESSED per story."
+description: "테스트 파일 및 증거의 품질 검토 — 파일 존재 여부를 넘어 실제 어설션(단언) 커버리지 평가."
 argument-hint: "[story-path | sprint | system-name]"
 user-invocable: true
 allowed-tools: Read, Glob, Grep, Write, Bash(bash "*/.claude/skills/test-evidence-review/../../hooks/yaml-helper.sh" resolve_config *), Bash(bash .claude/scripts/review-receipts.sh check *)

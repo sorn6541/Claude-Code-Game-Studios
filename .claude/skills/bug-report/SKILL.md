@@ -1,6 +1,6 @@
 ---
 name: bug-report
-description: "Structured bug report from a description, or analyze code for potential bugs. Reproduction steps, severity."
+description: "설명으로부터 구조화된 버그 보고서 작성 또는 잠재적 버그 코드 분석. 재현 절차, 심각도 정의."
 argument-hint: "[description] | analyze [path-to-file] | verify [BUG-ID] | close [BUG-ID]"
 user-invocable: true
 allowed-tools: Read, Glob, Grep, Write, Edit, AskUserQuestion, Bash(bash "*/.claude/skills/bug-report/../../hooks/yaml-helper.sh" resolve_config *)

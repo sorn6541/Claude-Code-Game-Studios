@@ -1,6 +1,6 @@
 ---
 name: design-review
-description: "Reviews one design document for completeness, internal consistency, implementability, and design standards. Before handing to programmers."
+description: "단일 기획 문서의 완성도, 내부 일관성, 구현 가능성, 디자인 표준 준수 여부 검토. 프로그래머 전달 전 실행."
 argument-hint: "[path-to-design-doc] [--review full|lean|solo]"
 user-invocable: true
 allowed-tools: Read, Glob, Grep, Write, Edit, Agent, AskUserQuestion, Bash(bash "*/.claude/skills/design-review/../../hooks/yaml-helper.sh" resolve_config *), Bash(bash .claude/scripts/review-receipts.sh check *), Bash(bash .claude/scripts/review-receipts.sh hash *), Bash(bash .claude/scripts/gdd-structure-check.sh *), Bash(grep -E '^  - name:' design/registry/entities.yaml), Bash(grep -n -i -E *)

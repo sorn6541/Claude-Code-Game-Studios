@@ -1,6 +1,6 @@
 ---
 name: milestone-review
-description: "Milestone progress review — completeness, quality metrics, risk, go/no-go recommendation. At checkpoints or before a deadline."
+description: "마일스톤 진행도 검토 — 완성도, 품질 지표, 리스크, Go/No-Go 권고. 체크포인트 또는 마감 전 실행."
 argument-hint: "[milestone-name|current] [--review full|lean|solo]"
 user-invocable: true
 allowed-tools: Read, Glob, Grep, Write, Agent, AskUserQuestion, Bash(bash "*/.claude/skills/milestone-review/../../hooks/yaml-helper.sh" resolve_config *)

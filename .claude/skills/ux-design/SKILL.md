@@ -1,6 +1,6 @@
 ---
 name: ux-design
-description: "Section-by-section UX spec authoring for a screen, flow or HUD. Reads the player journey to provide context; also project-wide accessibility."
+description: "화면, 플로우 또는 HUD에 대한 섹션별 UX 사양서 작성 — 플레이어 여정 반영 및 프로젝트 전반의 접근성 고려."
 argument-hint: "[screen/flow name] or 'hud' or 'patterns' or 'accessibility'"
 user-invocable: true
 allowed-tools: Read, Glob, Grep, Write, Edit, AskUserQuestion, Agent, Bash(bash "*/.claude/skills/ux-design/../../hooks/yaml-helper.sh" resolve_config *)

@@ -1,6 +1,6 @@
 ---
 name: map-systems
-description: "Decompose a concept into individual systems, map dependencies, prioritize design order, create the systems index."
+description: "게임 콘셉트를 개별 시스템으로 분해하고, 의존성을 매핑하며, 기획 순서를 정하여 시스템 인덱스 구축."
 argument-hint: "[next | system-name] [--review full|lean|solo]"
 user-invocable: true
 allowed-tools: Read, Glob, Grep, Write, Edit, AskUserQuestion, TaskCreate, TaskGet, TaskList, TaskUpdate, Agent, Bash(bash "*/.claude/skills/map-systems/../../hooks/yaml-helper.sh" resolve_config *)

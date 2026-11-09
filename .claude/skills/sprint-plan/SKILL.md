@@ -1,6 +1,6 @@
 ---
 name: sprint-plan
-description: "New or updated sprint plan from the current milestone, completed work, and available capacity."
+description: "현재 마일스톤, 완료된 작업, 가용 리소스를 고려한 신규 또는 업데이트된 스프린트 계획 수립."
 argument-hint: "[new|update|status] [--review full|lean|solo]"
 user-invocable: true
 allowed-tools: Read, Glob, Grep, Write, Edit, Agent, AskUserQuestion, Bash(bash "*/.claude/skills/sprint-plan/../../hooks/yaml-helper.sh" resolve_config *), Bash(ls production/sprints/*)

@@ -1,6 +1,6 @@
 ---
 name: team-narrative
-description: "Orchestrate the narrative team — narrative-director, writer, world-builder, level-designer — for story, world lore, narrative-driven levels."
+description: "내러티브 팀 오케스트레이션 — 내러티브 디렉터, 작가, 월드 빌더, 레벨 디자이너 조율 (스토리, 세계관, 퀘스트)."
 argument-hint: "[narrative content description] [--review full|lean|solo]"
 user-invocable: true
 allowed-tools: Read, Glob, Grep, Write, Edit, Agent, AskUserQuestion, TaskCreate, TaskGet, TaskList, TaskUpdate, Bash(bash "*/.claude/skills/team-narrative/../../hooks/yaml-helper.sh" resolve_config *)

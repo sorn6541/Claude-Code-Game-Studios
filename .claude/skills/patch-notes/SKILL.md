@@ -1,6 +1,6 @@
 ---
 name: patch-notes
-description: "Player-facing patch notes from git history and changelogs. Translates developer language into player communication."
+description: "Git 커밋 기록과 변경 로그를 기반으로 플레이어 대상 패치 노트 작성. 개발 용어를 게이머 친화적 언어로 변환."
 argument-hint: "[version] [--style brief|detailed|full]"
 user-invocable: true
 allowed-tools: Read, Glob, Grep, Write, Bash(bash "*/.claude/skills/patch-notes/../../hooks/yaml-helper.sh" resolve_config *), Bash(git log *)

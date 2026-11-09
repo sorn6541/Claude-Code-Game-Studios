@@ -1,6 +1,6 @@
 ---
 name: asset-spec
-description: "Per-asset visual specs plus AI generation prompts from GDDs and character profiles. After the art bible."
+description: "GDD 및 캐릭터 프로필 기반 에셋별 비주얼 사양 및 AI 생성 프롬프트 작성. 아트 바이블 이후 단계."
 argument-hint: "[system:<name> | level:<name> | character:<name>] [--review full|lean|solo]"
 user-invocable: true
 allowed-tools: Read, Glob, Grep, Write, Edit, Agent, AskUserQuestion, Bash(bash "*/.claude/skills/asset-spec/../../hooks/yaml-helper.sh" resolve_config *)

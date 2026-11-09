@@ -1,6 +1,6 @@
 ---
 name: launch-checklist
-description: "Launch readiness across every department: code, content, store, marketing, community, infrastructure, legal, go/no-go sign-offs."
+description: "출시 준비 점검 — 코드, 콘텐츠, 스토어, 마케팅, 커뮤니티, 인프라, 법적 요건 및 최종 Go/No-Go 승인."
 argument-hint: "[launch-date or 'dry-run']"
 user-invocable: true
 disable-model-invocation: true

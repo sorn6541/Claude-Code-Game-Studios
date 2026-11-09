@@ -1,6 +1,6 @@
 ---
 name: playtest-report
-description: "Structured playtest report template, or turn existing playtest notes into structured feedback."
+description: "구조화된 플레이테스트 보고서 템플릿 작성 또는 기존 플레이테스트 메모를 구조화된 피드백으로 변환."
 argument-hint: "[new|analyze path-to-notes] [--review full|lean|solo]"
 user-invocable: true
 allowed-tools: Read, Glob, Grep, Write, Agent, AskUserQuestion, Bash(bash "*/.claude/skills/playtest-report/../../hooks/yaml-helper.sh" resolve_config *)

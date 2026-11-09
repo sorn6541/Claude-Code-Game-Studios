@@ -1,6 +1,6 @@
 ---
 name: consistency-check
-description: "Scan GDDs against the entity registry for cross-document conflicts. Grep-first approach targets conflicting sections, different stats."
+description: "문서 간 충돌을 찾기 위해 엔티티 레지스트리와 GDD 교차 검사. 충돌 섹션 및 불일치 스탯을 선제 탐색."
 argument-hint: "[full | since-last-review | entity:<name> | item:<name>]"
 user-invocable: true
 allowed-tools: Read, Glob, Grep, Write, Edit, AskUserQuestion, Bash(bash "*/.claude/skills/consistency-check/../../hooks/yaml-helper.sh" resolve_config *), Bash(git log *), Bash(bash .claude/scripts/registry.sh validate*)

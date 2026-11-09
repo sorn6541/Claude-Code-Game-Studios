@@ -1,6 +1,6 @@
 ---
 name: regression-suite
-description: "Map test coverage to GDD critical paths, find fixed bugs lacking regression tests, flag drift from new features."
+description: "테스트 커버리지를 GDD 핵심 경로에 매핑하고, 리그레션 테스트가 누락된 버그를 감지하여 회귀 방지."
 argument-hint: "[update | audit | report]"
 user-invocable: true
 allowed-tools: Read, Glob, Grep, Write, Edit, AskUserQuestion, Bash(bash "*/.claude/skills/regression-suite/../../hooks/yaml-helper.sh" resolve_config *)

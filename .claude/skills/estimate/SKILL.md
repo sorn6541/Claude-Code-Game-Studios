@@ -1,6 +1,6 @@
 ---
 name: estimate
-description: "Estimate task effort from complexity, dependencies, velocity, risk. Structured estimate with confidence levels."
+description: "복잡도, 의존성, 개발 속도, 리스크를 종합하여 작업 공수 추정. 신뢰도 수준이 포함된 구조화된 견적."
 argument-hint: "[task-description]"
 user-invocable: true
 allowed-tools: Read, Glob, Grep

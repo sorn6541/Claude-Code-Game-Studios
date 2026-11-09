@@ -20,10 +20,12 @@ production/session-state/
 .scratch/
 # Per-agent working memory written at runtime — not release material
 .claude/agent-memory/
+.agents/agent-memory/
 # Worktrees from the prototyper, isolated subagents and `claude --worktree`.
 # Each is a separate checkout; staging everything would add it as an embedded
 # repository.
 .claude/worktrees/
+.agents/worktrees/
 
 
 # === Local sandboxes and scratch work ===

@@ -1,6 +1,6 @@
 ---
 name: team-combat
-description: "Orchestrate the combat team — game-designer, gameplay-programmer, ai-programmer, technical-artist, sound-designer, qa-tester — design through implement and validate."
+description: "전투 팀 오케스트레이션 — 게임 디자이너, 게임플레이/AI 프로그래머, 테크니컬 아티스트, 사운드 디자이너, QA 테스터 조율."
 argument-hint: "[combat feature description] [--review full|lean|solo]"
 user-invocable: true
 allowed-tools: Read, Glob, Grep, Write, Edit, Agent, AskUserQuestion, TaskCreate, TaskGet, TaskList, TaskUpdate, Bash(bash "*/.claude/skills/team-combat/../../hooks/yaml-helper.sh" resolve_config *)

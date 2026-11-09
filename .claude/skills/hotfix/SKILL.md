@@ -1,6 +1,6 @@
 ---
 name: hotfix
-description: "Emergency fix bypassing normal sprint process — hotfix branch, approvals tracked, backport verified, full audit trail."
+description: "일반 스프린트 프로세스를 우회하는 긴급 핫픽스 — 핫픽스 브랜치, 승인 추적, 백포트 검증, 감사 추적."
 argument-hint: "[bug-id or description]"
 user-invocable: true
 disable-model-invocation: true

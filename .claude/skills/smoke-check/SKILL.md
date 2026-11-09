@@ -1,6 +1,6 @@
 ---
 name: smoke-check
-description: "Critical-path smoke gate before QA hand-off — runs the automated suite. A failed check means the build is not QA-ready."
+description: "QA 인계 전 핵심 경로 스모크 게이트 — 자동화 테스트 스위트 실행. 실패 시 빌드는 QA 불가 상태로 판정."
 argument-hint: "[sprint | quick | --platform pc|console|mobile|all]"
 user-invocable: true
 allowed-tools: Read, Glob, Grep, Write, AskUserQuestion, Bash(bash "*/.claude/skills/smoke-check/../../hooks/yaml-helper.sh" resolve_config *), Bash(bash .claude/scripts/project-coherence.sh*), Bash(command -v *), Bash(uname -s), Bash(godot --headless --path . --import), Bash(timeout 900 godot --headless *), Bash(timeout 1800 godot --headless *), Bash(grep -q 'com.unity.test-framework' Packages/manifest.json), Bash(echo present), Bash(echo ABSENT)
@@ -9,91 +9,52 @@ model: sonnet
 
 !`bash "${CLAUDE_SKILL_DIR}/../../hooks/yaml-helper.sh" resolve_config --keys automation,workflow,qa.level,testing.strict`
 
-# Smoke Check
+# 스모크 체크 (Smoke Check)
 
-This skill is the gate between "implementation done" and "ready for QA
-hand-off". It runs the automated test suite, checks for test coverage gaps,
-batch-verifies critical paths with the developer, and produces a PASS/FAIL
-report.
+"구현 완료"와 "QA 인계 준비 완료" 사이의 핵심 관문(Gate)입니다. 자동화된 테스트 스위트를 실행하고, 테스트 커버리지 갭을 점검하며, 개발자와 함께 핵심 경로를 검증하여 최종 PASS/FAIL 판정 보고서를 생성합니다.
 
-The rule is simple: **a build that fails smoke check does not go to QA.**
-Handing a broken build to QA wastes their time and demoralises the team.
+원칙은 단순합니다: **스모크 체크를 통과하지 못한 빌드는 QA팀에 넘기지 않습니다.**
+망가진 빌드를 QA팀에 넘기는 것은 테스터의 시간을 낭비하고 팀의 사기를 저하시킵니다.
 
-**Output:** `production/qa/smoke-[date].md`
+**산출물 경로:** `production/qa/smoke-[날짜].md`
 
 ---
 
-Every `AskUserQuestion` call follows `.claude/docs/automation-modes.md`
-(collaborative asks always · guided major-only · autonomous logs and proceeds;
-`automation_always_ask` categories always prompt).
+모든 질문은 `.claude/docs/automation-modes.md`의 협업 규칙을 따릅니다.
 
-**`qa.level`**: at `minimal`, smoke-check is **optional** — if
-run, a FAIL is advisory and never blocks hand-off, and a project with no game
-tests is checked by its build, launch and critical paths alone (Phase 1 step 1); at `standard`, it is required
-before a phase transition; at `full`, before every commit. This sits in front of
-the Phase 6 `testing.strict.config` resolution (which only matters once a smoke run
-gates). Distinct axis from `workflow`.
+**`qa.level`에 따른 판정 기준:**
+- `minimal`: 스모크 체크는 선택 사항입니다. FAIL 판정이 나와도 권고 수준이며 인계를 차단하지 않습니다.
+- `standard`: 단계 전환(Phase transition) 전 필수 통과.
+- `full`: 매 커밋 및 전 단계 필수 통과.
 
-## Parse Arguments
+## 인수 분석 (Parse Arguments)
 
-Arguments can be combined: `/smoke-check sprint --platform console`
+인수는 조합하여 실행할 수 있습니다: `/smoke-check sprint --platform console`
 
-**Base mode** (first argument, default: `sprint`):
-- `sprint` — full smoke check against the current sprint's stories
-- `quick` — skip coverage scan (Phase 3) and Batch 3; use for rapid re-checks
+**기본 모드 (첫 번째 인수, 기본값: `sprint`):**
+- `sprint`: 현재 스프린트의 스토리에 대한 전체 스모크 체크 실행.
+- `quick`: 커버리지 스캔(3단계) 및 수동 배치 3 생략 (수정 후 빠른 재검증용).
 
-**Platform flag** (`--platform`, default: none):
-- `--platform pc` — add PC-specific checks (keyboard, mouse, windowed mode)
-- `--platform console` — add console-specific checks (gamepad, TV safe zones,
-  platform certification requirements)
-- `--platform mobile` — add mobile-specific checks (touch, portrait/landscape,
-  battery/thermal behaviour)
-- `--platform all` — add all platform variants; output per-platform verdict table
-
-If `--platform` is provided, Phase 4 adds platform-specific batches and
-Phase 5 outputs a per-platform verdict table in addition to the overall verdict.
+**플랫폼 플래그 (`--platform`, 기본값: 없음):**
+- `--platform pc`: PC 고유 점검 (키보드, 마우스, 창 모드 등) 추가.
+- `--platform console`: 콘솔 고유 점검 (게임패드, TV 안전 영역, 플랫폼 인증 요건) 추가.
+- `--platform mobile`: 모바일 고유 점검 (터치, 가로/세로 회전, 발열/배터리 동작) 추가.
+- `--platform all`: 모든 플랫폼 변형 추가 및 플랫폼별 판정 테이블 출력.
 
 ---
 
-## Phase 1: Detect Test Setup
+## 단계별 실행 구조
 
-**Read `references/1-detect-setup.md` now and follow it** — this phase's steps are in that file, not here. Read it again if the conversation was compacted or resumed during this phase.
+- **1단계: 테스트 환경 감지 (Phase 1: Detect Test Setup)**: `references/1-detect-setup.md` 참조
+- **2단계: 자동화 테스트 실행 (Phase 2: Run Automated Tests)**: `references/2-run-tests.md` 참조
+- **3단계: 테스트 커버리지 확인 (Phase 3: Check Test Coverage)**: `references/3-coverage.md` 참조
+- **4단계: 수동 스모크 점검 실행 (Phase 4: Run Manual Smoke Checks)**: `references/4-manual-checks.md` 참조
+- **5단계: 보고서 생성 (Phase 5: Generate Report)**: `references/5-report.md` 참조
+- **6단계: 작성 승인 및 게이트 판정 (Phase 6: Write and Gate)**: `references/6-write-gate.md` 참조
 
-## Phase 2: Run Automated Tests
+## 협업 프로토콜 (Collaborative Protocol)
 
-**Read `references/2-run-tests.md` now and follow it** — this phase's steps are in that file, not here. Read it again if the conversation was compacted or resumed during this phase.
-
-## Phase 3: Check Test Coverage
-
-**Read `references/3-coverage.md` now and follow it** — this phase's steps are in that file, not here. Read it again if the conversation was compacted or resumed during this phase.
-
-## Phase 4: Run Manual Smoke Checks
-
-**Read `references/4-manual-checks.md` now and follow it** — this phase's steps are in that file, not here. Read it again if the conversation was compacted or resumed during this phase.
-
-## Phase 5: Generate Report
-
-**Read `references/5-report.md` now and follow it** — this phase's steps are in that file, not here. Read it again if the conversation was compacted or resumed during this phase.
-
-## Phase 6: Write and Gate
-
-**Read `references/6-write-gate.md` now and follow it** — this phase's steps are in that file, not here. Read it again if the conversation was compacted or resumed during this phase.
-
-## Collaborative Protocol
-
-**Applies in `collaborative` mode (the default).** For `guided` and
-`autonomous` modes, see `.claude/docs/automation-modes.md` — the rules below
-describe what collaborative mode requires, not universal behavior.
-
-- **Never treat NOT RUN as automatic FAIL** — record it as NOT RUN and let
-  the developer confirm status manually. Unconfirmed NOT RUN yields **NOT
-  ASSESSED**, not FAIL — and not a pass verdict either.
-- **Never auto-fix failures** — report them and state what must be resolved.
-  Do not attempt to edit source code or test files.
-- **PASS WITH WARNINGS does not block QA hand-off** — it records advisory
-  gaps for `/story-done` to follow up on.
-- **`quick` argument** skips Phase 3 (coverage scan) and Phase 4 Batch 3.
-  Use it for rapid re-checks after fixing a specific failure.
-- Use `AskUserQuestion` for all manual smoke check verification.
-- **Never write the report without asking** — Phase 6 requires explicit
-  approval before any file is created.
+- **미실행(NOT RUN)을 임의로 FAIL로 처리하지 마십시오.** 미실행 상태로 기록하고 개발자에게 수동 확인을 요청합니다.
+- **실패 항목을 에이전트가 임의로 수정하지 마십시오.** 실패 원인을 보고하고 해결이 필요한 내용을 설명합니다.
+- **PASS WITH WARNINGS(경고 포함 통과)**는 QA 인계를 차단하지 않으며, `/story-done`에서 후속 조치할 권고 사항으로 기록합니다.
+- **사전 승인 없이 보고서 파일을 작성하지 마십시오.** 6단계에서 사용자에게 명시적 확인을 받은 후 파일을 생성합니다.

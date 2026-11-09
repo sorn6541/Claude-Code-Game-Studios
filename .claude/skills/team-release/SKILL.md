@@ -1,6 +1,6 @@
 ---
 name: team-release
-description: "Orchestrate the release team — release-manager, qa-lead, devops-engineer, producer — to execute a release from candidate to deployment."
+description: "릴리스 팀 오케스트레이션 — 릴리스 매니저, QA 리드, 데브옵스 엔지니어, 프로듀서 조율 (후보 빌드부터 출시까지)."
 argument-hint: "[version number or 'next'] [--review full|lean|solo]"
 user-invocable: true
 allowed-tools: Read, Glob, Grep, Write, Edit, Agent, AskUserQuestion, TaskCreate, TaskGet, TaskList, TaskUpdate, Bash(bash "*/.claude/skills/team-release/../../hooks/yaml-helper.sh" resolve_config *)
